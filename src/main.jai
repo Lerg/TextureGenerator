@@ -4,7 +4,6 @@ Stb_Image       :: #import "stb_image";
 Simp            :: #import "Simp";
 Input           :: #import "Input";
 Window_Creation :: #import "Window_Creation";
-GetRect         :: #import "GetRect";
 
 Generator :: #import,file "generator.jai";
 
@@ -18,7 +17,7 @@ KEYS :: struct {
 state : struct {
 	window_width          : s32 = 1920;
 	window_height         : s32 = 1080;
-	generation_type       :     = Generator.Generation_Type.SAND_RIPPLES;
+	generation_type       :     = Generator.Generation_Type.RANDOM_NOISE;
 	bitmap_width          : s32 = 512;
 	bitmap_height         : s32 = 512;
 	bitmap_texture_format :     = Simp.Texture_Format.RGBA8;
@@ -41,7 +40,7 @@ drawTexture :: () {
 	background_color := Math.Vector4.{1, 1, 1, 1};
 	Simp.set_shader_for_images(*state.texture);
 	Simp.immediate_begin();
-	scale := 1;
+	scale := 2;
 	w, h  := scale * state.bitmap_width, scale * state.bitmap_height;
 	Simp.immediate_quad(
 		0.5 * (state.window_width - w),
@@ -89,8 +88,6 @@ main :: () {
 		height      = state.window_height
 	);
 	Simp.set_render_target(window);
-	initFonts();
-	GetRect.ui_init();
 	Generator.init();
 
 	generateBitmap();
@@ -112,8 +109,6 @@ main :: () {
 
 		for event: Input.events_this_frame {
 			if event.type == .QUIT then should_quit = true;
-
-			GetRect.getrect_handle_event(event);
 
 			if event.type == {
 				case .KEYBOARD;

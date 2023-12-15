@@ -63,7 +63,7 @@ sand_ripples_state : struct {
 
 sandRipples :: (bitmap: *Simp.Bitmap) {
 	Dune_Simulator.setSize(*sand_ripples_state.dune_field, bitmap.width, bitmap.height);
-	Dune_Simulator.randomize(*sand_ripples_state.dune_field, 0, 500);
+	Dune_Simulator.randomize(*sand_ripples_state.dune_field, 0, 200);
 	Dune_Simulator.toBitmap(*sand_ripples_state.dune_field, bitmap, sand_ripples_state.is_normal_map);
 }
 
